@@ -19118,8 +19118,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a511c77163d1c6044bfb59214ea03e30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  mouseSensitivity: 150
+  moveSpeed: 10
+  mouseSensitivity: 250
 --- !u!143 &668863823
 CharacterController:
   m_ObjectHideFlags: 0
@@ -43731,7 +43731,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 1aee9acf50d7bdd4daca5057e5962307, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.731
+      value: 0.23
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 1aee9acf50d7bdd4daca5057e5962307, type: 3}
       propertyPath: m_LocalPosition.z
@@ -43764,6 +43764,18 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 1aee9acf50d7bdd4daca5057e5962307, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1910052173744044171, guid: 1aee9acf50d7bdd4daca5057e5962307, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.013
+      objectReference: {fileID: 0}
+    - target: {fileID: -1910052173744044171, guid: 1aee9acf50d7bdd4daca5057e5962307, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.243
+      objectReference: {fileID: 0}
+    - target: {fileID: -1910052173744044171, guid: 1aee9acf50d7bdd4daca5057e5962307, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.003
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 1aee9acf50d7bdd4daca5057e5962307, type: 3}
       propertyPath: m_Name
