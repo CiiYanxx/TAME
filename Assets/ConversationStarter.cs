@@ -45,7 +45,7 @@ public class ConversationStarter : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Character"))
+        if (other.CompareTag("Player"))
         {
             playerInside = true;
         }
@@ -53,7 +53,7 @@ public class ConversationStarter : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Character"))
+        if (other.CompareTag("Player"))
         {
             playerInside = false;
         }
