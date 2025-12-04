@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bb4933e0542fe14eb914a2ff66e9031, type: 3}
   m_Name: Quest1_StrayCatRescue
   m_EditorClassIdentifier: 
-  initialDialog: []
-  targetAnimalName: Stray Dog
-  rescueLocationHint: I last saw it near the old market fountain.
+  initialDialog:
+  - Hello, I'm Kevin
+  targetAnimalName: Stray Cat
+  rescueLocationHint: I last saw it near the fountain
   acceptOption: '[Accept Rescue Mission]'
   acceptAnswer: Fantastic! Find the animal and bring it back safely.
   declineOption: '[Decline]'

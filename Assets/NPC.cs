@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -17,6 +16,7 @@ public class NPC : MonoBehaviour
     TextMeshProUGUI optionButton2Text;
 
     [Header("Quest Management")]
+    [Tooltip("Drag QuestInfo ScriptableObjects here.")]
     public List<QuestInfo> questInfoList; 
     [NonSerialized]
     public List<Quest> quests = new List<Quest>(); 
@@ -64,31 +64,34 @@ public class NPC : MonoBehaviour
         
         isTalkingWithPlayer = true;
         DialogSystem.Instance.OpenDialogUI(); 
-        LookAtPlayer();
-
+        
+        // --- CAMERA ACTION: Start Dialogue View ---
+        CameraManager.Instance.StartDialogueView(transform);
+        
         if (firstTimeInteraction)
         {
             firstTimeInteraction = false;
-            StartQuestInitialDialog();
             currentDialog = 0;
+            StartQuestInitialDialog();
         }
         else 
         {
-            // 1. If quest is already completed (No more interaction needed for this quest)
+            // 1. If quest is already completed (No more interaction needed)
             if (currentActiveQuest.isCompleted)
             {
                 npcDialogText.text = currentActiveQuest.info.finalWords; 
                 SetCloseOption();
             }
             // 2. If the mission was accepted AND the result (success/fail) is known
-            else if (currentActiveQuest.accepted && currentActiveQuest.isMissionSuccess || currentActiveQuest.accepted && !currentActiveQuest.isMissionSuccess)
+            // This is the condition that checks the state set by ReportQuestOutcome(success)
+            else if (currentActiveQuest.accepted && (currentActiveQuest.isMissionSuccess || !currentActiveQuest.isMissionSuccess))
             {
                 if (currentActiveQuest.isMissionSuccess)
                 {
                     npcDialogText.text = currentActiveQuest.info.comebackSuccess;
                     SetRewardOption();
                 }
-                else
+                else // Mission Failure Reported
                 {
                     npcDialogText.text = "Oh dear, it seems the rescue failed this time. We still need to find that animal. Please try again or abandon the mission.";
                     SetFailureOptions();
@@ -109,11 +112,29 @@ public class NPC : MonoBehaviour
             // 5. If the previous quest was completed and we haven't started the next one
             else if (currentActiveQuest.initialDialogCompleted == false)
             {
+                currentDialog = 0;
                 StartQuestInitialDialog();
             }
         }
     }
+
+    // --- NEW METHOD FOR EXTERNAL STATE UPDATE ---
+    /// <summary>
+    /// Called by the RescueController to update the quest success/failure state.
+    /// </summary>
+    public void ReportQuestOutcome(bool success)
+    {
+        if (currentActiveQuest != null && currentActiveQuest.accepted)
+        {
+            currentActiveQuest.isMissionSuccess = success;
+            // The NPC now has the result and will display the correct dialogue 
+            // the next time the player talks to it.
+            Debug.Log($"NPC received mission outcome: Success={success}. Quest state updated.");
+        }
+    }
     
+    // --- Option Setter Methods ---
+
     private void SetRewardOption()
     {
         optionButton1Text.text = "[Receive Reward]";
@@ -154,6 +175,9 @@ public class NPC : MonoBehaviour
     {
         DialogSystem.Instance.CloseDialogUI();
         isTalkingWithPlayer = false;
+        
+        // --- CAMERA ACTION: End Dialogue View ---
+        CameraManager.Instance.EndDialogueView();
     }
     
     private void SetAcceptAndDeclineOptions()
@@ -174,7 +198,16 @@ public class NPC : MonoBehaviour
 
     private void StartQuestInitialDialog()
     {
-        npcDialogText.text = currentActiveQuest.info.initialDialog[currentDialog];
+        // Safety Check for Empty Dialog List
+        if (currentActiveQuest.info.initialDialog.Count == 0)
+        {
+            Debug.LogWarning($"Quest '{currentActiveQuest.info.name}' has no initial dialog. Skipping to options.");
+            currentActiveQuest.initialDialogCompleted = true;
+            SetAcceptAndDeclineOptions(); 
+            return; 
+        }
+
+        npcDialogText.text = currentActiveQuest.info.initialDialog[currentDialog]; 
         optionButton1Text.text = "Next";
         optionButton1.onClick.RemoveAllListeners();
         optionButton1.onClick.AddListener(()=> {
@@ -209,15 +242,16 @@ public class NPC : MonoBehaviour
     {
         currentActiveQuest.accepted = true;
         currentActiveQuest.declined = false;
-        currentActiveQuest.isMissionSuccess = false; 
+        currentActiveQuest.isMissionSuccess = false; // Reset success flag when accepting
 
         // Announce the mission and the location hint
         npcDialogText.text = $"{currentActiveQuest.info.acceptAnswer}\n\nHint: Find the **{currentActiveQuest.info.targetAnimalName}** near the **{currentActiveQuest.info.rescueLocationHint}**.";
         
-        // --- START MISSION ---
-        // NOTE: Define a function to translate your hint text into actual world coordinates (Vector3).
+        // --- START MISSION: Spawn the Animal ---
         Vector3 missionSpawnPoint = FindMissionLocation(currentActiveQuest.info.rescueLocationHint); 
-        RescueController.Instance.StartMission(currentActiveQuest.info.targetAnimalName, missionSpawnPoint);
+        
+        // PASS 'THIS' (the NPC instance) to the controller
+        RescueController.Instance.StartMission(this, currentActiveQuest.info.targetAnimalName, missionSpawnPoint);
 
         CloseDialogAfterAcceptance();
     }
@@ -255,7 +289,7 @@ public class NPC : MonoBehaviour
                 currentActiveQuest = null; 
             }
         }
-        else // Failure (Punishment)
+        else // Failure (Punishment/Re-attempt)
         {
             ProgressSystem.Instance.DeductProgress(currentActiveQuest.info.progressPointsDeduction);
             
@@ -274,23 +308,24 @@ public class NPC : MonoBehaviour
     {
         currentActiveQuest.declined = true;
         // Clean up the animal if it was spawned but the mission is abandoned
-        RescueController.Instance.SendMessage("CleanupMission");
+        RescueController.Instance.CleanupMission(); // Direct call is better than SendMessage
 
         npcDialogText.text = currentActiveQuest.info.declineAnswer;
         CloseDialogAfterAcceptance();
     }
 
+    // Placeholder to get spawn coordinates from the text hint
     private Vector3 FindMissionLocation(string hint)
     {
-        // Placeholder: Replace this with your actual logic to find coordinates based on the hint.
-        // For testing, just return a visible spot.
-        if (hint.Contains("fountain")) return new Vector3(50, 0, 50);
-        if (hint.Contains("park")) return new Vector3(-20, 0, 10);
-        return Vector3.zero; // Default spawn point
+        // Added 'f' suffix for correct float conversion (5f, 324.39f, etc.)
+        if (hint.Contains("fountain")) return new Vector3(67.2f, 5f, 324.39f);
+        if (hint.Contains("park")) return new Vector3(-20f, 0f, 10f);
+        return new Vector3(0f, 0f, 0f); 
     }
 
     public void LookAtPlayer()
     {
+        // This function remains available but is not called during StartConversation().
         if (PlayerState.Instance == null || PlayerState.Instance.playerBody == null) return;
         
         var player = PlayerState.Instance.playerBody.transform;

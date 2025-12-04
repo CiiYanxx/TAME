@@ -18,7 +18,12 @@ public class AnimalInteractable : MonoBehaviour
     
     private void StartRescueMinigame()
     {
-        // 1. You would usually hide the game world UI and show your minigame UI here.
+        // --- CAMERA ACTION ---
+        // Focus Camera on the Animal for the Minigame
+        CameraManager.Instance.StartDialogueView(transform);
+        
+        // 1. You would usually disable player controls here.
+        // 2. You would usually activate the dedicated rescue/taming minigame UI panel here.
         
         Debug.Log($"Starting rescue minigame for {gameObject.name}...");
         
@@ -29,9 +34,16 @@ public class AnimalInteractable : MonoBehaviour
     
     private void SimulateMinigameEnd()
     {
+        // In your real game, this boolean is determined by the player winning or losing the minigame.
         bool success = Random.Range(0, 2) == 1; 
         
         // Report the outcome back to the controller
         RescueController.Instance.ReportMissionOutcome(success);
+        
+        // --- CAMERA ACTION ---
+        // Revert Camera view after the minigame is finished
+        CameraManager.Instance.EndDialogueView();
+        
+        // 3. You would usually re-enable player controls here.
     }
 }
