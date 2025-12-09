@@ -5,8 +5,10 @@ public class ProgressSystem : MonoBehaviour
     public static ProgressSystem Instance { get; private set; }
 
     [Header("UI Reference")]
-    // NEW: Reference to the script that manages the visual bar
+    // Reference to the script that manages the visual bar
     public RescuePointsBar rescuePointsBar; 
+    // Add reference for a coin display if one exists (for completeness)
+    // public TextMeshProUGUI coinDisplay;
 
     [Header("Progress & Currency")]
     public int rescueProgressPoints = 0;
@@ -17,23 +19,15 @@ public class ProgressSystem : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Optional: keep across scenes
+            DontDestroyOnLoad(gameObject); 
         }
         else
         {
             Destroy(gameObject);
         }
     }
-
-    public void Start()
-    {
-        // Optional: Initialize the bar display with the current points on startup.
-        if (rescuePointsBar != null)
-        {
-            rescuePointsBar.currentPoints = rescueProgressPoints;
-            // The bar's Start method will handle the initial display update.
-        }
-    }
+    
+    // 🚨 REVISION: Removed Start() method. The RescuePointsBar handles its own initialization in its Start().
 
     public void AddProgress(int points)
     {
@@ -58,7 +52,7 @@ public class ProgressSystem : MonoBehaviour
         {
             // 1. Update the internal state
             rescueProgressPoints -= points;
-            if (rescueProgressPoints < 0) rescueProgressPoints = 0; 
+            rescueProgressPoints = Mathf.Max(0, rescueProgressPoints); // Prevent going below zero
             Debug.LogWarning($"Deducted {points} Progress Points. Total: {rescueProgressPoints}");
 
             // 2. Update the UI bar
@@ -75,6 +69,8 @@ public class ProgressSystem : MonoBehaviour
         {
             goldCoins += amount;
             Debug.Log($"Gained {amount} Gold Coins. Total: {goldCoins}");
+            // Update Coin UI here if you had a display reference
+            // if (coinDisplay != null) coinDisplay.text = goldCoins.ToString();
         }
     }
 }

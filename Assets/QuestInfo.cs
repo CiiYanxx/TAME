@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/QuestInfo", order = 1)]
 public class QuestInfo : ScriptableObject
@@ -8,30 +8,29 @@ public class QuestInfo : ScriptableObject
     public List<string> initialDialog = new List<string>();
 
     [Header("Quest Target")]
-    public string targetAnimalName; // Removed default value
+    public string targetAnimalName = "Stray Animals"; 
     [TextArea(1, 5)]
-    public string rescueLocationHint; // Removed default value
+    public string rescueLocationHint = "I last saw it near the old market fountain."; 
 
     [Header("Options")]
-    [TextArea(1, 5)]
-    public string acceptOption; // Removed default value
-    [TextArea(1, 10)] 
-    public string acceptAnswer; // Removed default value
-    [TextArea(1, 5)]
-    public string declineOption; // Removed default value
-    [TextArea(1, 5)]
-    public string declineAnswer; // Removed default value
-    [TextArea(1, 5)]
-    public string comebackAfterDecline; // Removed default value
-    [TextArea(1, 5)]
-    public string comebackInProgress; // Removed default value
-    [TextArea(1, 5)]
-    public string comebackSuccess; // Removed default value
-    [TextArea(1, 5)]
-    public string finalWords; // Removed default value
+    public string acceptOption = "Accept Rescue Mission";
+    public string acceptAnswer = "Fantastic! Find the Stray animal and bring it back safely.";
+    public string declineOption = "Decline";
+    public string declineAnswer = "That's a shame. I hope you'll reconsider.";
+    public string comebackAfterDecline = "The animal is still out there. Are you ready now?";
+    public string comebackInProgress = "You haven't rescued it yet. Be careful out there!"; 
+    public string comebackSuccess = "You brought it back! Thank you so much."; 
+    public string finalWords = "Thank you for all your help. No more missions for now.";
 
-    [Header("Reward & Punishment")]
-    public int progressPointsReward = 100;
-    public int coinReward = 0; 
-    public int progressPointsDeduction = 50; 
+    [Header("Reward & Penalty Values")]
+    [Tooltip("Reward for success (given when talking to NPC) - Should be 10.")]
+    public int progressPointsReward = 10;
+    public int coinReward = 5; 
+    
+    // 🚨 REVISION: Penalty for minigame loss is now -2 points.
+    [Tooltip("Penalty for minigame loss is applied immediately in AnimalInteractable (-2 points).")]
+    public int minigameLossPoints = 2;
+    
+    [Tooltip("Penalty for abandoning a quest (given when talking to NPC) - Should be 20.")]
+    public int abandonmentPenalty = 20; 
 }

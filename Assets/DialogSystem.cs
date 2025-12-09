@@ -11,6 +11,8 @@ public class DialogSystem : MonoBehaviour
     public TextMeshProUGUI dialogText;
     public Button option1BTN;
     public Button option2BTN;
+    
+    // 🚨 REVISION: OutcomePanel references REMOVED
 
     private void Awake()
     {
@@ -26,37 +28,19 @@ public class DialogSystem : MonoBehaviour
 
     private void Start()
     {
-        if (dialogPanel != null)
-        {
-            dialogPanel.SetActive(false);
-        }
-        if (option2BTN != null)
-        {
-            option2BTN.gameObject.SetActive(false);
-        }
+        if (dialogPanel != null) dialogPanel.SetActive(false);
+        if (option2BTN != null) option2BTN.gameObject.SetActive(false);
     }
 
     public void OpenDialogUI()
     {
-        if (dialogPanel != null)
-        {
-            dialogPanel.SetActive(true);
-        }
-        if (option2BTN != null)
-        {
-            option2BTN.gameObject.SetActive(false);
-        }
+        if (dialogPanel != null) dialogPanel.SetActive(true);
+        if (option2BTN != null) option2BTN.gameObject.SetActive(false);
     }
 
     public void CloseDialogUI()
     {
-        if (dialogPanel != null)
-        {
-            dialogPanel.SetActive(false);
-        }
-        if (option2BTN != null)
-        {
-            option2BTN.gameObject.SetActive(false);
-        }
+        if (dialogPanel != null) dialogPanel.SetActive(false);
+        if (option2BTN != null) option2BTN.gameObject.SetActive(false);
     }
 }

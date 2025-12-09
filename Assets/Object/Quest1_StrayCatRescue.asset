@@ -24,7 +24,8 @@ MonoBehaviour:
   comebackAfterDecline: The animal is still out there. Are you ready now?
   comebackInProgress: You haven't rescued it yet. Be careful out there!
   comebackSuccess: You brought it back! Thank you so much.
-  finalWords: Thank you for all your help. No more missions for now.
-  progressPointsReward: 100
+  finalWords: Thank you for all your help. No more Rescue missions for now.
+  progressPointsReward: 10
   coinReward: 0
-  progressPointsDeduction: 50
+  minigameLossPoints: -2
+  abandonmentPenalty: 20
