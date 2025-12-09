@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialDialog:
   - Hello, I'm Kevin
+  - There is Stray Animals out there
   targetAnimalName: Stray Cat
-  rescueLocationHint: I last saw it near the fountain
-  acceptOption: '[Accept Rescue Mission]'
+  rescueLocationHint: Residential Area
+  acceptOption: Accept Rescue Mission
   acceptAnswer: Fantastic! Find the animal and bring it back safely.
-  declineOption: '[Decline]'
+  declineOption: Decline
   declineAnswer: That's a shame. I hope you'll reconsider.
   comebackAfterDecline: The animal is still out there. Are you ready now?
   comebackInProgress: You haven't rescued it yet. Be careful out there!

@@ -903,7 +903,7 @@ GameObject:
   - component: {fileID: 6397291155531275066}
   - component: {fileID: 6397291155531275061}
   m_Layer: 0
-  m_Name: Kitty_001
+  m_Name: Stray Cat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

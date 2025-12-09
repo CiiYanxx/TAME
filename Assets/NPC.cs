@@ -245,7 +245,7 @@ public class NPC : MonoBehaviour
         currentActiveQuest.isMissionSuccess = false; // Reset success flag when accepting
 
         // Announce the mission and the location hint
-        npcDialogText.text = $"{currentActiveQuest.info.acceptAnswer}\n\nHint: Find the **{currentActiveQuest.info.targetAnimalName}** near the **{currentActiveQuest.info.rescueLocationHint}**.";
+        npcDialogText.text = $"{currentActiveQuest.info.acceptAnswer}\n\nHint: Find the {currentActiveQuest.info.targetAnimalName} near the {currentActiveQuest.info.rescueLocationHint}.";
         
         // --- START MISSION: Spawn the Animal ---
         Vector3 missionSpawnPoint = FindMissionLocation(currentActiveQuest.info.rescueLocationHint); 
@@ -258,7 +258,7 @@ public class NPC : MonoBehaviour
     
     private void CloseDialogAfterAcceptance()
     {
-        optionButton1Text.text = "[Close]";
+        optionButton1Text.text = "Close";
         optionButton1.onClick.RemoveAllListeners();
         optionButton1.onClick.AddListener(() => {
             CloseDialogUI();
@@ -274,7 +274,7 @@ public class NPC : MonoBehaviour
             ProgressSystem.Instance.AddProgress(currentActiveQuest.info.progressPointsReward);
             ProgressSystem.Instance.AddCoins(currentActiveQuest.info.coinReward);
             
-            npcDialogText.text = $"Wonderful! You gained **{currentActiveQuest.info.progressPointsReward}** progress points and **{currentActiveQuest.info.coinReward}** coins. You are a true animal hero!";
+            npcDialogText.text = $"Wonderful! You gained {currentActiveQuest.info.progressPointsReward} progress points and {currentActiveQuest.info.coinReward} coins. You are a true animal hero!";
             
             // Advance to the next quest
             activeQuestIndex++;
@@ -293,7 +293,7 @@ public class NPC : MonoBehaviour
         {
             ProgressSystem.Instance.DeductProgress(currentActiveQuest.info.progressPointsDeduction);
             
-            npcDialogText.text = $"That's unfortunate. We've deducted **{currentActiveQuest.info.progressPointsDeduction}** points. The animal is still out there. You may try again.";
+            npcDialogText.text = $"That's unfortunate. We've deducted {currentActiveQuest.info.progressPointsDeduction} points. The animal is still out there. You may try again.";
             
             // Reset state to allow re-attempt
             currentActiveQuest.isCompleted = false; 
@@ -318,7 +318,7 @@ public class NPC : MonoBehaviour
     private Vector3 FindMissionLocation(string hint)
     {
         // Added 'f' suffix for correct float conversion (5f, 324.39f, etc.)
-        if (hint.Contains("fountain")) return new Vector3(67.2f, 5f, 324.39f);
+        if (hint.Contains("Residential")) return new Vector3(67.2f, 5f, 324.39f);
         if (hint.Contains("park")) return new Vector3(-20f, 0f, 10f);
         return new Vector3(0f, 0f, 0f); 
     }

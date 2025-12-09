@@ -8,27 +8,27 @@ public class QuestInfo : ScriptableObject
     public List<string> initialDialog = new List<string>();
 
     [Header("Quest Target")]
-    public string targetAnimalName = "Stray Dog"; 
+    public string targetAnimalName; // Removed default value
     [TextArea(1, 5)]
-    public string rescueLocationHint = "I last saw it near the old market fountain."; 
+    public string rescueLocationHint; // Removed default value
 
     [Header("Options")]
     [TextArea(1, 5)]
-    public string acceptOption = "[Accept Rescue Mission]";
-    [TextArea(1, 10)] // Increased size for the main dialogue text
-    public string acceptAnswer = "Fantastic! Find the animal and bring it back safely.";
+    public string acceptOption; // Removed default value
+    [TextArea(1, 10)] 
+    public string acceptAnswer; // Removed default value
     [TextArea(1, 5)]
-    public string declineOption = "[Decline]";
+    public string declineOption; // Removed default value
     [TextArea(1, 5)]
-    public string declineAnswer = "That's a shame. I hope you'll reconsider.";
+    public string declineAnswer; // Removed default value
     [TextArea(1, 5)]
-    public string comebackAfterDecline = "The animal is still out there. Are you ready now?";
+    public string comebackAfterDecline; // Removed default value
     [TextArea(1, 5)]
-    public string comebackInProgress = "You haven't rescued it yet. Be careful out there!"; 
+    public string comebackInProgress; // Removed default value
     [TextArea(1, 5)]
-    public string comebackSuccess = "You brought it back! Thank you so much."; 
+    public string comebackSuccess; // Removed default value
     [TextArea(1, 5)]
-    public string finalWords = "Thank you for all your help. No more missions for now.";
+    public string finalWords; // Removed default value
 
     [Header("Reward & Punishment")]
     public int progressPointsReward = 100;
