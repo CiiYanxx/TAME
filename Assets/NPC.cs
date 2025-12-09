@@ -137,7 +137,7 @@ public class NPC : MonoBehaviour
 
     private void SetRewardOption()
     {
-        optionButton1Text.text = "[Receive Reward]";
+        optionButton1Text.text = "Receive Reward";
         optionButton1.onClick.RemoveAllListeners();
         optionButton1.onClick.AddListener(() => {
             ReceiveRewardAndCompleteQuest(true); 
@@ -147,14 +147,14 @@ public class NPC : MonoBehaviour
     
     private void SetFailureOptions()
     {
-        optionButton1Text.text = "[Accept Deduction (Try Again)]";
+        optionButton1Text.text = "Accept Deduction (Try Again)";
         optionButton1.onClick.RemoveAllListeners();
         optionButton1.onClick.AddListener(() => {
             ReceiveRewardAndCompleteQuest(false); 
         });
         
         optionButton2.gameObject.SetActive(true);
-        optionButton2Text.text = "[Abandon Mission]";
+        optionButton2Text.text = "Abandon Mission";
         optionButton2.onClick.RemoveAllListeners();
         optionButton2.onClick.AddListener(() => {
             DeclinedQuest(); 
@@ -163,7 +163,7 @@ public class NPC : MonoBehaviour
     
     private void SetCloseOption()
     {
-        optionButton1Text.text = "[Close]";
+        optionButton1Text.text = "Close";
         optionButton1.onClick.RemoveAllListeners();
         optionButton1.onClick.AddListener(() => {
             CloseDialogUI(); 
