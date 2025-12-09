@@ -1,14 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
+using TMPro; // Still included, but no longer used
 
 public class RescuePointsBar : MonoBehaviour
 {
     [Header("UI References")]
     [Tooltip("The Image component that will be the circular bar.")]
     public Image fillImage;
-    [Tooltip("The TextMeshProUGUI component displaying the current progress value.")]
-    public TextMeshProUGUI valueText;
+    // Removed: public TextMeshProUGUI valueText;
 
     [Header("Progress Settings")]
     [Tooltip("The player's current Rescue Points.")]
@@ -29,7 +28,7 @@ public class RescuePointsBar : MonoBehaviour
     }
 
     /// <summary>
-    /// Updates the bar's visual fill and text display.
+    /// Updates the bar's visual fill only.
     /// </summary>
     private void UpdateBarDisplay()
     {
@@ -37,13 +36,16 @@ public class RescuePointsBar : MonoBehaviour
         float fillAmount = Mathf.Clamp01(currentPoints / maxPoints);
         
         // Apply the fill amount to the circular Image
-        fillImage.fillAmount = fillAmount;
-
-        // Update the text to show the current value
-        if (valueText != null)
+        if (fillImage != null)
         {
-            valueText.text = $"{currentPoints} / {maxPoints} Rescue Points";
+            fillImage.fillAmount = fillAmount;
         }
+        else
+        {
+            Debug.LogError("Fill Image reference is missing on RescuePointsBar!");
+        }
+
+        // Removed: Logic to update the text display
     }
 
     /// <summary>
