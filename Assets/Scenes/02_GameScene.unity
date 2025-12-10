@@ -24832,7 +24832,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 883, y: 479.6902}
+  m_AnchoredPosition: {x: 851, y: 445}
   m_SizeDelta: {x: 157.6529, y: 145.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &805120288
@@ -27654,7 +27654,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1119, y: 446}
+  m_AnchoredPosition: {x: -1036, y: 420}
   m_SizeDelta: {x: 180.9533, y: 180.9533}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &897581053
@@ -27670,8 +27670,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fillImage: {fileID: 1036939112}
-  currentPoints: 0
-  maxPoints: 100
+  currentPoints: 40
+  maxPoints: 200
 --- !u!114 &897581054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39982,7 +39982,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1299035590}
-  - component: {fileID: 1299035589}
   m_Layer: 0
   m_Name: ProgressSystem
   m_TagString: Untagged
@@ -39990,21 +39989,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1299035589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1299035588}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc878b29a43fadc478a12f7c71c39d4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rescuePointsBar: {fileID: 897581053}
-  rescueProgressPoints: 0
-  goldCoins: 0
 --- !u!4 &1299035590
 Transform:
   m_ObjectHideFlags: 0
@@ -54048,7 +54032,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1059, y: -366.87}
+  m_AnchoredPosition: {x: 977, y: -366.87}
   m_SizeDelta: {x: 371.5552, y: 365.2502}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1779374801
@@ -61779,7 +61763,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1060.8, y: 476.9}
+  m_AnchoredPosition: {x: 1028.8, y: 442.2098}
   m_SizeDelta: {x: 88.703, y: 106.1681}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2034441974
@@ -63816,7 +63800,7 @@ Transform:
   m_GameObject: {fileID: 2089296899}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 146.35, y: 3.0166628, z: 212.77}
+  m_LocalPosition: {x: 148.2, y: 3.0166628, z: 27.8}
   m_LocalScale: {x: 50, y: 50, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children:
