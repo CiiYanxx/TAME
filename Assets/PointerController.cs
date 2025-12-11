@@ -176,12 +176,12 @@ public class PointerController : MonoBehaviour
         {
             if (success)
             {
-                outcomeText.text = "You Successfully Tamed the Animal! Go back to Dr. Kevin";
+                outcomeText.text = "You Successfully tamed the animal! Go back to Dr. Kevin";
             }
             else
             {
                 // 🚨 Updated message to reflect final failure after multiple attempts
-                outcomeText.text = "It appears the animal is fleeing, try again later!"; 
+                outcomeText.text = "You scared the stary snimals! Try again later."; 
             }
             outcomePanel.SetActive(true);
             

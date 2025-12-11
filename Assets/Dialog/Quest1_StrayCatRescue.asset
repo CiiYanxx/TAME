@@ -17,7 +17,7 @@ MonoBehaviour:
   - I want you to rescue the Stray Animals.
   targetAnimalName: Stray Cat
   rescueLocationHint: Residential Area
-  acceptOption: Accept Rescue Mission
+  acceptOption: Accept
   acceptAnswer: Fantastic! Find the animal and bring it back safely.
   declineOption: Decline
   declineAnswer: That's a shame. I hope you'll reconsider.
