@@ -1,83 +1,99 @@
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement; 
 
 public class PauseController : MonoBehaviour
 {
-    [Header("Panel Reference")]
-    public GameObject pauseMenuPanel;
+    public static PauseController Instance;
 
-    [Header("Audio UI References")]
-    public Slider volumeSlider;
-    public Toggle muteToggle;
+    [Header("Audio Sources")]
+    public AudioSource musicSource;
+    public AudioSource sfxSource; // New AudioSource for Sound Effects
 
-    private void Start()
+    [Header("Default SFX Clips")]
+    public AudioClip buttonClickSFX; // Clip for general button presses
+    public AudioClip catMeowSFX;     // Clip for cat interaction
+    public AudioClip dogBarkSFX;     // Clip for dog interaction
+
+    private void Awake()
     {
-        // Link UI controls to their functions
-        if (volumeSlider != null)
-            volumeSlider.onValueChanged.AddListener(SetMusicVolume);
-        
-        if (muteToggle != null)
-            muteToggle.onValueChanged.AddListener(ToggleMusicMute);
-
-        // Initialize UI values using the AudioManager's current settings
-        if (AudioManager.Instance != null && AudioManager.Instance.musicSource != null)
+        // --- Enforce Singleton Pattern ---
+        if (Instance == null)
         {
-            if (volumeSlider != null)
-                volumeSlider.value = AudioManager.Instance.musicSource.volume;
-            
-            if (muteToggle != null)
-                muteToggle.isOn = AudioManager.Instance.musicSource.mute;
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // Keeps the Manager alive across scenes
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        // --- Initialize AudioSources if not set in Inspector ---
+
+        // Music Source Check
+        if (musicSource == null)
+        {
+            // You can also consider using GetOrAddComponent pattern
+            musicSource = gameObject.AddComponent<AudioSource>();
+            musicSource.loop = true; // Music typically loops
+        }
+
+        // SFX Source Check (NEW)
+        if (sfxSource == null)
+        {
+            sfxSource = gameObject.AddComponent<AudioSource>();
+            sfxSource.loop = false; // SFX typically do not loop
         }
     }
 
-    // 1. Pause/Unpause Logic (Called by the Pause Button and Resume Button)
-    public void TogglePause()
-    {
-        bool isPaused = pauseMenuPanel.activeSelf;
-        pauseMenuPanel.SetActive(!isPaused);
+    // --- Music Controls (Kept as before) ---
 
-        // Pause time (0) or Resume time (1)
-        Time.timeScale = !isPaused ? 0f : 1f;
-        Debug.Log($"Game {(isPaused ? "Resumed" : "Paused")}");
-    }
-
-    // 2. Button Functions (Called by the buttons inside the Pause Menu Panel)
-    public void ResumeGame()
-    {
-        // Calls the same function as the Pause button to unpause and close the menu
-        TogglePause();
-    }
-
-    public void GoToMainMenu()
-    {
-        // Ensure time resumes before loading a new scene
-        Time.timeScale = 1f; 
-        
-        // IMPORTANT: Change "MainMenu" to your actual main menu scene name!
-        SceneManager.LoadScene("01_MainMenu"); 
-    }
-    
-    // 3. Audio UI Callbacks (Calls the central AudioManager)
     public void SetMusicVolume(float volume)
     {
-        if (AudioManager.Instance != null)
+        if (musicSource != null)
         {
-            AudioManager.Instance.SetMusicVolume(volume);
-            
-            // Unmute the toggle if volume is raised from 0
-            if (volume > 0 && muteToggle != null && muteToggle.isOn)
-            {
-                muteToggle.isOn = false;
-            }
+            musicSource.volume = volume;
         }
     }
 
     public void ToggleMusicMute(bool isMuted)
     {
-        if (AudioManager.Instance != null)
+        if (musicSource != null)
         {
-            AudioManager.Instance.ToggleMusicMute(isMuted);
+            musicSource.mute = isMuted;
         }
+    }
+
+    // --- SFX Controls (NEW) ---
+
+    /// <summary>
+    /// Plays a one-shot AudioClip through the sfxSource.
+    /// </summary>
+    /// <param name="clip">The AudioClip to play.</param>
+    /// <param name="volumeScale">Optional volume multiplier for this specific clip.</param>
+    public void PlaySFX(AudioClip clip, float volumeScale = 1.0f)
+    {
+        if (sfxSource != null && clip != null)
+        {
+            // PlayOneShot allows multiple clips to be played simultaneously
+            // (e.g., button click and a sword swing can happen at the same time)
+            sfxSource.PlayOneShot(clip, volumeScale);
+        }
+    }
+
+    // --- Convenience Methods for Default SFX (NEW) ---
+
+    public void PlayButtonClick()
+    {
+        PlaySFX(buttonClickSFX);
+    }
+
+    public void PlayCatMeow()
+    {
+        PlaySFX(catMeowSFX);
+    }
+
+    public void PlayDogBark()
+    {
+        PlaySFX(dogBarkSFX);
     }
 }

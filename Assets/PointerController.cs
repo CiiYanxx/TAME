@@ -176,7 +176,7 @@ public class PointerController : MonoBehaviour
         {
             if (success)
             {
-                outcomeText.text = "You Successfully Tamed the Animal!";
+                outcomeText.text = "You Successfully Tamed the Animal! Go back to Dr. Kevin";
             }
             else
             {
@@ -186,7 +186,7 @@ public class PointerController : MonoBehaviour
             outcomePanel.SetActive(true);
             
             // Auto-hide the panel after a delay (e.g., 2 seconds)
-            Invoke(nameof(HideOutcomePanel), 2f); 
+            Invoke(nameof(HideOutcomePanel), 5f); 
         }
     }
 
