@@ -210,11 +210,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 077d3ef81cc90464a850a711ca74fca7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicSource: {fileID: 0}
-  sfxSource: {fileID: 0}
-  buttonClickSFX: {fileID: 0}
-  catMeowSFX: {fileID: 0}
-  dogBarkSFX: {fileID: 0}
+  pauseMenuPanel: {fileID: 759294}
+  volumeSlider: {fileID: 100483243}
+  muteToggle: {fileID: 635832207}
 --- !u!1001 &13382087
 PrefabInstance:
   m_ObjectHideFlags: 0
