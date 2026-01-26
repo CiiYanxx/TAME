@@ -6,38 +6,43 @@ using TMPro;
 public class PlayerCharacterCustomizer : MonoBehaviour
 {
     [Serializable]
-    public class BodyPartData {
+    public class BodyPartGroup {
         public BodyPartType bodyPartType;
-        public SkinnedMeshRenderer skinnedMeshRenderer;
-        public Mesh[] meshArray;
+        public GameObject[] variants; // Drag your child objects (HAIR_1_L, etc.) here
         [HideInInspector] public int currentIndex = 0;
     }
 
     public enum BodyPartType { Hair, ClothesTop, ClothesBottom, SkinColor }
 
-    [SerializeField] private List<BodyPartData> bodyPartDataList;
+    [SerializeField] private List<BodyPartGroup> bodyPartGroups;
     [SerializeField] private TMP_InputField nameInputField;
 
-    // Changes the mesh and saves the index
-    public void ChangeBodyPart(BodyPartType type) {
-        BodyPartData data = bodyPartDataList.Find(x => x.bodyPartType == type);
-        if (data == null || data.meshArray.Length == 0) return;
+    // Public function that accepts an int to fix the conversion error
+    public void ChangeBodyPart(int typeIndex) 
+    {
+        BodyPartType type = (BodyPartType)typeIndex;
+        BodyPartGroup group = bodyPartGroups.Find(x => x.bodyPartType == type);
+        
+        if (group == null || group.variants.Length == 0) return;
 
-        data.currentIndex = (data.currentIndex + 1) % data.meshArray.Length;
-        data.skinnedMeshRenderer.sharedMesh = data.meshArray[data.currentIndex];
+        // Disable current variant
+        group.variants[group.currentIndex].SetActive(false);
+
+        // Move to next index using modulo
+        group.currentIndex = (group.currentIndex + 1) % group.variants.Length;
+
+        // Enable new variant
+        group.variants[group.currentIndex].SetActive(true);
     }
 
-    // Aligns with the Save Logic at [00:20:58]
-    public void SaveCharacter() {
-        // Save Name
+    public void SaveCharacter() 
+    {
         string pName = string.IsNullOrEmpty(nameInputField.text) ? "Player" : nameInputField.text;
         PlayerPrefs.SetString("PlayerName", pName);
 
-        // Save Body Part Indices
-        foreach (var part in bodyPartDataList) {
-            PlayerPrefs.SetInt("Saved_" + part.bodyPartType.ToString(), part.currentIndex);
+        foreach (var group in bodyPartGroups) {
+            PlayerPrefs.SetInt("Saved_" + group.bodyPartType.ToString(), group.currentIndex);
         }
-        
-        PlayerPrefs.Save();
+        PlayerPrefs.Save(); //
     }
 }

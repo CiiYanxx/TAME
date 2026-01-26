@@ -2,19 +2,27 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class CreatorUIHandler : MonoBehaviour {
+public class CreatorUIHandler : MonoBehaviour
+{
     [SerializeField] private PlayerCharacterCustomizer customizer;
-    public Button hairBtn, topBtn, bottomBtn, skinBtn, confirmBtn;
+
+    [Header("Feature Buttons")]
+    public Button hairBtn;
+    public Button topBtn;
+    public Button bottomBtn;
+    public Button skinBtn;
+    public Button confirmBtn;
 
     private void Start() {
-        hairBtn.onClick.AddListener(() => customizer.ChangeBodyPart(PlayerCharacterCustomizer.BodyPartType.Hair));
-        topBtn.onClick.AddListener(() => customizer.ChangeBodyPart(PlayerCharacterCustomizer.BodyPartType.ClothesTop));
-        bottomBtn.onClick.AddListener(() => customizer.ChangeBodyPart(PlayerCharacterCustomizer.BodyPartType.ClothesBottom));
-        skinBtn.onClick.AddListener(() => customizer.ChangeBodyPart(PlayerCharacterCustomizer.BodyPartType.SkinColor));
+        // We cast the Enum to (int) to match the customizer's function
+        hairBtn.onClick.AddListener(() => customizer.ChangeBodyPart((int)PlayerCharacterCustomizer.BodyPartType.Hair));
+        topBtn.onClick.AddListener(() => customizer.ChangeBodyPart((int)PlayerCharacterCustomizer.BodyPartType.ClothesTop));
+        bottomBtn.onClick.AddListener(() => customizer.ChangeBodyPart((int)PlayerCharacterCustomizer.BodyPartType.ClothesBottom));
+        skinBtn.onClick.AddListener(() => customizer.ChangeBodyPart((int)PlayerCharacterCustomizer.BodyPartType.SkinColor));
 
         confirmBtn.onClick.AddListener(() => {
-            customizer.SaveCharacter(); // Save data first
-            SceneManager.LoadScene("02_GameScene"); // Then go to game
+            customizer.SaveCharacter();
+            SceneManager.LoadScene("02_GameScene"); 
         });
     }
 }
